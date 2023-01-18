@@ -10,8 +10,8 @@ using Dreamteck.Splines;
 
 public class PlayerController : MonoBehaviour, IEventScripts
 {
-    public static Player Instance => s_Instance;
-    static Player s_Instance;
+    public static PlayerController Instance => s_Instance;
+    static PlayerController s_Instance;
 
     [Header ("MOVEMENT")]
     [SerializeField] bool SwipeLeftRight;
@@ -34,6 +34,34 @@ public class PlayerController : MonoBehaviour, IEventScripts
     SplineFollower _splineFollower;
     public bool useSpline;
     public SplineFollower SplineFollower { get { return _splineFollower; } }
+
+    void Awake()
+    {
+        SetupInstance();
+    }
+
+    void OnEnable()
+    {
+        SetupInstance();
+    }
+
+    void SetupInstance()
+    {
+        if (s_Instance != null && s_Instance != this)
+        {
+            if (Application.isPlaying)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                DestroyImmediate(gameObject);
+            }
+            return;
+        }
+
+        s_Instance = this;
+    }
 
     private void Start()
     {

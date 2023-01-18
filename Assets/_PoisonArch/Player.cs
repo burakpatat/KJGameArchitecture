@@ -13,6 +13,33 @@ public class Player : MonoBehaviour, IAnimationScripts, IEventScripts
 
     Animator _animator;
 
+    void Awake()
+    {
+        SetupInstance();
+    }
+
+    void OnEnable()
+    {
+        SetupInstance();
+    }
+
+    void SetupInstance()
+    {
+        if (s_Instance != null && s_Instance != this)
+        {
+            if (Application.isPlaying)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                DestroyImmediate(gameObject);
+            }
+            return;
+        }
+
+        s_Instance = this;
+    }
     void Start()
     {
         _animator = GetComponent<Animator>();
