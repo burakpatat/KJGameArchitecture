@@ -24,12 +24,17 @@ namespace PoisonArch
         public Text MainLevelCount { get { return _mainLevelCount; } }
         public Text GemCount { get { return _gemCount; } }
 
+        [Header("GameMode Canvas")]
+        public Canvas VerticalCanvas;
+        public Canvas HorizontalCanvas;
+
         void Start()
         {
             GameManager.Instance.EventMenu += OnMenu;
             GameManager.Instance.EventPlay += OnPlay;
             GameManager.Instance.EventFinish += OnFinish;
             GameManager.Instance.EventLose += OnLose;
+            GameManager.Instance.EventPause += OnPause;
         }
         public void OnMenu()
         {
@@ -54,7 +59,10 @@ namespace PoisonArch
         {
 
         }
+        public void OnPause()
+        {
 
+        }
     }
 }
 

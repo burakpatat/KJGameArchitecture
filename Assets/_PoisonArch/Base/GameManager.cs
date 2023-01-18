@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PoisonArch
 {
-    public enum GameState { Menu, Play, Finish, Lose }
+    public enum GameState { Menu, Play, Finish, Lose, Pause}
 
     public class GameManager : AbstractSingleton<GameManager>
     {
@@ -16,6 +16,7 @@ namespace PoisonArch
         public event Action EventPlay;
         public event Action EventFinish;
         public event Action EventLose;
+        public event Action EventPause;
 
         void Start()
         {
@@ -43,6 +44,11 @@ namespace PoisonArch
         {
             _gameState = GameState.Lose;
             EventLose?.Invoke();
+        }
+        public void SetPause()
+        {
+            _gameState = GameState.Pause;
+            EventPause?.Invoke();
         }
 
         public void OnNextLevel()

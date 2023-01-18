@@ -8,4 +8,5 @@ public interface IEventScripts
     void OnPlay();
     void OnFinish();
     void OnLose();
+    void OnPause();
 }

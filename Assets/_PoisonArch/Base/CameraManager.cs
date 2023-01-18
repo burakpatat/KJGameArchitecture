@@ -17,6 +17,7 @@ namespace PoisonArch
             GameManager.Instance.EventPlay += OnPlay;
             GameManager.Instance.EventFinish += OnFinish;
             GameManager.Instance.EventLose += OnLose;
+            GameManager.Instance.EventPause += OnPause;
 
             //getCamera
             for (int i = 0; i < transform.childCount; i++)
@@ -65,6 +66,10 @@ namespace PoisonArch
         public void OnLose()
         {
             SetActiveCamera(_menuCam);
+        }
+        public void OnPause()
+        {
+           
         }
     }
 }

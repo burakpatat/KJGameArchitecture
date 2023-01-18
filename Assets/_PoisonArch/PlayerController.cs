@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour, IEventScripts
         GameManager.Instance.EventMenu += OnMenu;
         GameManager.Instance.EventLose += OnLose;
         GameManager.Instance.EventFinish += OnFinish;
+        GameManager.Instance.EventPause += OnPause;
 
         if (useSpline)
         {
@@ -164,6 +165,12 @@ public class PlayerController : MonoBehaviour, IEventScripts
         _walk = false;
     }
     public void OnLose()
+    {
+        MMVibrationManager.Haptic(HapticTypes.HeavyImpact);
+
+        _walk = false;
+    }
+    public void OnPause()
     {
         MMVibrationManager.Haptic(HapticTypes.HeavyImpact);
 

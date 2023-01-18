@@ -47,6 +47,7 @@ public class Player : MonoBehaviour, IAnimationScripts, IEventScripts
         GameManager.Instance.EventMenu += OnMenu;
         GameManager.Instance.EventPlay += OnPlay;
         GameManager.Instance.EventFinish += OnFinish;
+        GameManager.Instance.EventPause += OnPause;
     }
     public void OnMenu()
     {
@@ -68,7 +69,10 @@ public class Player : MonoBehaviour, IAnimationScripts, IEventScripts
     {
 
     }
+    public void OnPause()
+    {
 
+    }
     public void SetTriggerAnimation(Enum _enum)
     {
         //situation
