@@ -137,8 +137,6 @@ public class PlayerController : MonoBehaviour, IEventScripts
     }
     public void OnMenu()
     {
-        this.GetComponent<BoxCollider>().enabled = true;
-
         //splines
         if (useSpline)
         {

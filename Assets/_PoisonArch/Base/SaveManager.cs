@@ -1,14 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PoisonArch;
-
+using AudioSettings = PoisonArch.AudioSettings;
 /// <summary>
 /// A simple class used to save a load values
 /// using PlayerPrefs.
 /// </summary>
-public class SaveManager : AbstractSingleton<SaveManager>
+public class SaveManager : MonoBehaviour
 {
+    public static SaveManager Instance => s_Instance;
+    static SaveManager s_Instance;
+    void Awake()
+    {
+        s_Instance = this;
+    }
+
     const string k_LevelProgress = "LevelProgress";
     const string k_Currency = "Currency";
     const string k_Xp = "Xp";

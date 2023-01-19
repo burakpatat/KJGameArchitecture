@@ -6,18 +6,27 @@ namespace PoisonArch
 {
     public class CameraManager : AbstractSingleton<CameraManager>, IEventScripts
     {
+        public static CameraManager Instance;
         [SerializeField] List<Transform> _cameras;
-        [SerializeField] Transform _playCam;
+
         [SerializeField] Transform _menuCam;
 
-        public Camera MainUsedCamera;
+        public Transform _playCam;
+        public Transform _finalCam;
+
+        public Transform MainUsedCamera;
+
+        private void Awake()
+        {
+            if (Instance == null) Instance = this;
+        }
         void Start()
         {
             GameManager.Instance.EventMenu += OnMenu;
             GameManager.Instance.EventPlay += OnPlay;
             GameManager.Instance.EventFinish += OnFinish;
             GameManager.Instance.EventLose += OnLose;
-            GameManager.Instance.EventPause += OnPause;
+            GameManager.Instance.EventPause += OnLose;
 
             //getCamera
             for (int i = 0; i < transform.childCount; i++)
@@ -26,7 +35,7 @@ namespace PoisonArch
             }
         }
 
-        void SetActiveCamera(Transform activeCamera)
+        public void SetActiveCamera(Transform activeCamera)
         {
             int _priority = _cameras.Count;
             for (int i = 0; i < _cameras.Count; i++)
@@ -44,14 +53,17 @@ namespace PoisonArch
                     _priority--;
                     _cameras[i].GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Priority = _priority;
                 }
-            }
 
-            MainUsedCamera = _cameras[_priority].GetComponent<Camera>();
+                MainUsedCamera = activeCamera.GetComponent<Transform>();
+            }
         }
 
         public void OnMenu()
         {
-            //SetActiveCamera(_menuCam);
+            SetActiveCamera(_menuCam);
+
+            //_finalCam.GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = AfterFinal.Instance.LikeButton;
+            //_finalCam.GetComponent<Cinemachine.CinemachineVirtualCamera>().LookAt = AfterFinal.Instance.LikeButton;
         }
 
         public void OnPlay()
@@ -61,15 +73,15 @@ namespace PoisonArch
 
         public void OnFinish()
         {
-            SetActiveCamera(_menuCam);
+            SetActiveCamera(_finalCam);
         }
         public void OnLose()
         {
-            SetActiveCamera(_menuCam);
+            SetActiveCamera(_finalCam);
         }
         public void OnPause()
         {
-           
+            SetActiveCamera(_playCam);
         }
     }
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using TMPro;
 
 namespace PoisonArch
 {
@@ -10,24 +12,16 @@ namespace PoisonArch
         [SerializeField] Transform _menuPanel;
         [SerializeField] Transform _mainPanel;
         [SerializeField] Transform _winPanel;
+        [SerializeField] Transform _losePanel;
 
         [SerializeField] Transform _playButton;
-        [SerializeField] Text _menuLevelCount;
-        [SerializeField] Text _mainLevelCount;
-        [SerializeField] Text _gemCount;
+        [SerializeField] TMP_Text _levelText;
 
         public Transform MenuPanel { get { return _menuPanel; } }
         public Transform MainPanel { get { return _mainPanel; } }
         public Transform WinPanel { get { return _winPanel; } }
+        public Transform LosePanel { get { return _losePanel; } }
         public Transform PlayButton { get { return _playButton; } }
-        public Text MenuLevelCount { get { return _menuLevelCount; } }
-        public Text MainLevelCount { get { return _mainLevelCount; } }
-        public Text GemCount { get { return _gemCount; } }
-
-        [Header("GameMode Canvas")]
-        public Canvas VerticalCanvas;
-        public Canvas HorizontalCanvas;
-
         void Start()
         {
             GameManager.Instance.EventMenu += OnMenu;
@@ -40,28 +34,46 @@ namespace PoisonArch
         {
             MenuPanel.gameObject.SetActive(true);
             WinPanel.gameObject.SetActive(false);
-            _menuLevelCount.text = (LevelManager.Instance.CurrentLevel + 1).ToString();
+            LosePanel.gameObject.SetActive(false);
+            _levelText.text = "Level " + (LevelManager.Instance.CurrentLevel + 1).ToString();
         }
 
         public void OnPlay()
         {
             MenuPanel.gameObject.SetActive(false);
             MainPanel.gameObject.SetActive(true);
-            _mainLevelCount.text = (LevelManager.Instance.CurrentLevel + 1).ToString();
+            _levelText.text = "Level " + (LevelManager.Instance.CurrentLevel + 1).ToString();
         }
 
         public void OnFinish()
         {
-            MainPanel.gameObject.SetActive(false);
-            WinPanel.gameObject.SetActive(true);
+            Invoke("Finish", 4f);
         }
         public void OnLose()
         {
-
+            Invoke("Lose", 4f);
         }
         public void OnPause()
         {
 
+        }
+        public void Lose()
+        {
+            MainPanel.gameObject.SetActive(false);
+            OpenPanelSmoothly(LosePanel);
+        }
+        public void Finish()
+        {
+            MainPanel.gameObject.SetActive(false);
+            OpenPanelSmoothly(WinPanel);
+        }
+        private void OpenPanelSmoothly(Transform panel)
+        {
+            panel.gameObject.SetActive(true);
+            panel.GetChild(0).GetComponent<Image>().DOFade(0.7f, 1.5f).From(0f);
+            panel.GetChild(1).DOScale(1, 1.5f).SetEase(Ease.OutBounce).From(0f);
+            panel.GetChild(2).DOScale(1, 1.5f).SetEase(Ease.OutBounce).From(0f);
+            panel.GetChild(3).DOScale(1, 1.5f).SetEase(Ease.OutBounce).From(0f);
         }
     }
 }
