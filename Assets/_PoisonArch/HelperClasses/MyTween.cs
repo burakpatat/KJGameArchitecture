@@ -35,4 +35,8 @@ public class MyTween : AbstractSingleton<MyTween>
         DCSeq.Append(TryAgainNumbers.GetChild(0).GetComponent<Image>().DOColor(fullAlpha, 0f));
         DCSeq.Append(TryAgainNumbers.GetChild(0).GetComponent<Image>().DOColor(noAlpha, 1f));
     }
+    public void CollactableRotate(Transform _transform, float _delay)
+    {
+        _transform.DORotate(new Vector3(0, 80f, 0), _delay, RotateMode.Fast).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
+    }
 }

@@ -22,6 +22,9 @@ namespace PoisonArch
         public Transform WinPanel { get { return _winPanel; } }
         public Transform LosePanel { get { return _losePanel; } }
         public Transform PlayButton { get { return _playButton; } }
+
+        [SerializeField]
+        SoundID m_Sound = SoundID.None;
         void Start()
         {
             GameManager.Instance.EventMenu += OnMenu;
@@ -36,6 +39,8 @@ namespace PoisonArch
             WinPanel.gameObject.SetActive(false);
             LosePanel.gameObject.SetActive(false);
             _levelText.text = "Level " + (LevelManager.Instance.CurrentLevel + 1).ToString();
+
+            Debug.Log("uı menu event - menu panel açılacak");
         }
 
         public void OnPlay()
@@ -43,11 +48,17 @@ namespace PoisonArch
             MenuPanel.gameObject.SetActive(false);
             MainPanel.gameObject.SetActive(true);
             _levelText.text = "Level " + (LevelManager.Instance.CurrentLevel + 1).ToString();
+
+            AudioManager.Instance.PlayMusic(m_Sound);
+
+            Debug.Log("uı menu event - main panel açılacak");
         }
 
         public void OnFinish()
         {
             Invoke("Finish", 4f);
+
+            Debug.Log("uı menu event - win fail paneller açılacak");
         }
         public void OnLose()
         {

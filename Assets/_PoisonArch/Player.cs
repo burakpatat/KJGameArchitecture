@@ -53,6 +53,7 @@ public class Player : MonoBehaviour, IAnimationScripts, IEventScripts
     {
         SetTriggerAnimation(PlayerState.Idle);
         transform.position = Vector3.zero;
+        Debug.Log("player menu event");
     }
 
     public void OnPlay()

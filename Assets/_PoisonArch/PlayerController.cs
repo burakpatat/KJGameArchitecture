@@ -182,34 +182,19 @@ public class PlayerController : MonoBehaviour, IEventScripts
         _splineFollower.follow = true;
 
     }
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            //Player.Instance.SetBoolAnimation(PlayerState.Run, false);
+            Player.Instance.SetTriggerAnimation(PlayerState.Idle);
+
+            _isLaunched = false;
+            _walk = false;
+
+            GameManager.Instance.SetFinish();
+
+        }
+
+    }
 }
-
-/* SAMPLE
-       private void OnTriggerEnter(Collider collision)
-   {
-       if (collision.gameObject.CompareTag("Final"))
-       {
-           Player.Instance.SetBoolAnimation(PlayerState.Run, false);
-           Player.Instance.SetTriggerAnimation(PlayerState.Idle);
-
-           _isLaunched = false;
-           _walk = false;
-
-           GameManager.Instance.SetFinish();
-
-       }
-       if (collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
-       {
-           if (!die)
-           {
-               Player.Instance.SetTriggerAnimation(PlayerState.Lose);
-               //Player.Instance.SetBoolAnimation(PlayerState.AfterRun, true);
-               this.GetComponent<BoxCollider>().enabled = false;
-               die = true;
-           }
-           _isLaunched = false;
-           GameManager.Instance.SetLose();
-       }
-
-   }
-  */
