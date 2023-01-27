@@ -41,6 +41,8 @@ namespace PoisonArch
             _levelText.text = "Level " + (LevelManager.Instance.CurrentLevel + 1).ToString();
 
             Debug.Log("uı menu event - menu panel açılacak");
+
+            AudioManager.Instance.PlayMusicForStart(m_Sound);
         }
 
         public void OnPlay()
@@ -49,7 +51,7 @@ namespace PoisonArch
             MainPanel.gameObject.SetActive(true);
             _levelText.text = "Level " + (LevelManager.Instance.CurrentLevel + 1).ToString();
 
-            AudioManager.Instance.PlayMusic(m_Sound);
+            
 
             Debug.Log("uı menu event - main panel açılacak");
         }

@@ -125,6 +125,12 @@ namespace PoisonArch
             m_MusicSource.loop = looping;
             m_MusicSource.Play();
         }
+        void PlayMusicForStart(AudioClip audioClip, bool looping = true)
+        {
+            m_MusicSource.clip = audioClip;
+            m_MusicSource.loop = looping;
+            m_MusicSource.Play();
+        }
 
         /// <summary>
         /// Play a music based on its sound ID
@@ -134,6 +140,10 @@ namespace PoisonArch
         public void PlayMusic(SoundID soundID, bool looping = true)
         {
             PlayMusic(m_Clips[soundID], looping);
+        }
+        public void PlayMusicForStart(SoundID soundID, bool looping = true)
+        {
+            PlayMusicForStart(m_Clips[soundID], looping);
         }
 
         /// <summary>

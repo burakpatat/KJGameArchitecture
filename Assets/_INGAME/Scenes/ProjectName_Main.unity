@@ -3230,8 +3230,8 @@ RectTransform:
   m_GameObject: {fileID: 1158754194}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1679657027}
   m_RootOrder: 3
@@ -3261,7 +3261,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "TEBR\u0130KLER!"
+  m_text: "HAR\u0130KASIN!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4b77f78160c533a4c9cb3a4532e5441e, type: 2}
   m_sharedMaterial: {fileID: 772056309464139012, guid: 4b77f78160c533a4c9cb3a4532e5441e, type: 2}
@@ -3288,8 +3288,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 47
+  m_fontSizeBase: 47
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
