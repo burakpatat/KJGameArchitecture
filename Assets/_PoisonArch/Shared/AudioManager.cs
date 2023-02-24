@@ -17,6 +17,10 @@ namespace PoisonArch
         ButtonSound,
         MenuMusic
     }
+    public enum SoureID
+    {
+        None,
+    }
     public class AudioManager : AbstractSingleton<AudioManager>
     {
         [Serializable]
@@ -25,11 +29,18 @@ namespace PoisonArch
             public SoundID m_SoundID;
             public AudioClip m_AudioClip;
         }
+        [Serializable]
+        class SourceIDPair
+        {
+            public SoureID m_SoundID;
+            public List<AudioSource> m_Sources;
+        }
 
         [SerializeField]
-        AudioSource m_MusicSource;
+        List<AudioSource> m_MusicSources;
         [SerializeField]
-        AudioSource m_EffectSource;
+        List<AudioSource> m_EffectSources;
+
         [SerializeField, Min(0f)]
         float m_MinSoundInterval = 0.1f;
         [SerializeField]
@@ -37,6 +48,7 @@ namespace PoisonArch
 
         float m_LastSoundPlayTime;
         readonly Dictionary<SoundID, AudioClip> m_Clips = new();
+        readonly Dictionary<SoureID, List<AudioSource>> m_Sources = new();
 
         AudioSettings m_AudioSettings = new();
 
@@ -49,7 +61,10 @@ namespace PoisonArch
             set
             {
                 m_AudioSettings.EnableMusic = value;
-                m_MusicSource.mute = !value;
+                for (int i = 0; i < m_MusicSources.Count; i++)
+                {
+                    m_MusicSources[i].mute = !value;
+                }
             }
         }
 
@@ -62,7 +77,10 @@ namespace PoisonArch
             set
             {
                 m_AudioSettings.EnableSfx = value;
-                m_EffectSource.mute = !value;
+                for (int i = 0; i < m_EffectSources.Count; i++)
+                {
+                    m_EffectSources[i].mute = !value;
+                }
             }
         }
 
