@@ -42,7 +42,7 @@ namespace PoisonArch
 
             Debug.Log("uı menu event - menu panel açılacak");
 
-            AudioManager.Instance.PlayMusicForStart(m_Sound);
+            AudioManager.Instance.PlayMusicForStart(m_Sound, MusicSourceID.MenuMusicSource);
         }
 
         public void OnPlay()

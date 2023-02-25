@@ -39,7 +39,7 @@ public class Collectable : MonoBehaviour
             m_Renderers[i].enabled = false;
         }
 
-        AudioManager.Instance.PlayEffect(m_Sound);
+        AudioManager.Instance.PlayEffect(m_Sound, EffectSourceID.CoinEffectSource);
 
         MMVibrationManager.Haptic(HapticTypes.MediumImpact);
     }

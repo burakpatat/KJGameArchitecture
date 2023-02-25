@@ -17,9 +17,15 @@ namespace PoisonArch
         ButtonSound,
         MenuMusic
     }
-    public enum SoureID
+    public enum MusicSourceID
     {
-        None,
+        All,
+        MenuMusicSource,
+    }
+    public enum EffectSourceID
+    {
+        All,
+        CoinEffectSource,
     }
     public class AudioManager : AbstractSingleton<AudioManager>
     {
@@ -30,25 +36,32 @@ namespace PoisonArch
             public AudioClip m_AudioClip;
         }
         [Serializable]
-        class SourceIDPair
+        class MusicSourceIDPair
         {
-            public SoureID m_SoundID;
-            public List<AudioSource> m_Sources;
+            public MusicSourceID music_SourceID;
+            public AudioSource music_Sources;
         }
-
-        [SerializeField]
-        List<AudioSource> m_MusicSources;
-        [SerializeField]
-        List<AudioSource> m_EffectSources;
+        [Serializable]
+        class EffectSourceIDPair
+        {
+            public EffectSourceID effect_SourceID;
+            public AudioSource effect_Sources;
+        }
 
         [SerializeField, Min(0f)]
         float m_MinSoundInterval = 0.1f;
+
         [SerializeField]
         SoundIDClipPair[] m_Sounds;
+        [SerializeField]
+        MusicSourceIDPair[] music_Sources;
+        [SerializeField]
+        EffectSourceIDPair[] effect_Sources;
 
         float m_LastSoundPlayTime;
         readonly Dictionary<SoundID, AudioClip> m_Clips = new();
-        readonly Dictionary<SoureID, List<AudioSource>> m_Sources = new();
+        readonly Dictionary<MusicSourceID, AudioSource> m_Sources = new();
+        readonly Dictionary<EffectSourceID, AudioSource> e_Sources = new();
 
         AudioSettings m_AudioSettings = new();
 
@@ -61,9 +74,9 @@ namespace PoisonArch
             set
             {
                 m_AudioSettings.EnableMusic = value;
-                for (int i = 0; i < m_MusicSources.Count; i++)
+                for (int i = 0; i < m_Sources.Count; i++)
                 {
-                    m_MusicSources[i].mute = !value;
+                    m_Sources[MusicSourceID.All].mute = !value;
                 }
             }
         }
@@ -77,9 +90,9 @@ namespace PoisonArch
             set
             {
                 m_AudioSettings.EnableSfx = value;
-                for (int i = 0; i < m_EffectSources.Count; i++)
+                for (int i = 0; i < e_Sources.Count; i++)
                 {
-                    m_EffectSources[i].mute = !value;
+                    e_Sources[EffectSourceID.All].mute = !value;
                 }
             }
         }
@@ -102,6 +115,14 @@ namespace PoisonArch
             foreach (var sound in m_Sounds)
             {
                 m_Clips.Add(sound.m_SoundID, sound.m_AudioClip);
+            }
+            foreach (var mSources in music_Sources)
+            {
+                m_Sources.Add(mSources.music_SourceID, mSources.music_Sources);
+            }
+            foreach (var eSources in effect_Sources)
+            {
+                e_Sources.Add(eSources.effect_SourceID, eSources.effect_Sources);
             }
         }
 
@@ -134,20 +155,20 @@ namespace PoisonArch
             SaveManager.Instance.SaveAudioSettings(m_AudioSettings);
         }
 
-        void PlayMusic(AudioClip audioClip, bool looping = true)
+        void PlayMusic(AudioClip audioClip, AudioSource sources, bool looping = true)
         {
-            if (m_MusicSource.isPlaying)
+            if (sources.isPlaying)
                 return;
 
-            m_MusicSource.clip = audioClip;
-            m_MusicSource.loop = looping;
-            m_MusicSource.Play();
+            sources.clip = audioClip;
+            sources.loop = looping;
+            sources.Play();
         }
-        void PlayMusicForStart(AudioClip audioClip, bool looping = true)
+        void PlayMusicForStart(AudioClip audioClip, AudioSource sources, bool looping = true)
         {
-            m_MusicSource.clip = audioClip;
-            m_MusicSource.loop = looping;
-            m_MusicSource.Play();
+            sources.clip = audioClip;
+            sources.loop = looping;
+            sources.Play();
         }
 
         /// <summary>
@@ -155,28 +176,28 @@ namespace PoisonArch
         /// </summary>
         /// <param name="soundID">The ID of the music</param>
         /// <param name="looping">Is music looping?</param>
-        public void PlayMusic(SoundID soundID, bool looping = true)
+        public void PlayMusic(SoundID soundID, MusicSourceID sourceID, bool looping = true)
         {
-            PlayMusic(m_Clips[soundID], looping);
+            PlayMusic(m_Clips[soundID], m_Sources[sourceID], looping);
         }
-        public void PlayMusicForStart(SoundID soundID, bool looping = true)
+        public void PlayMusicForStart(SoundID soundID, MusicSourceID sourceID, bool looping = true)
         {
-            PlayMusicForStart(m_Clips[soundID], looping);
+            PlayMusicForStart(m_Clips[soundID], m_Sources[sourceID], looping);
         }
 
         /// <summary>
         /// Stop the current music
         /// </summary>
-        public void StopMusic()
+        public void StopMusic(MusicSourceID sourceID)
         {
-            m_MusicSource.Stop();
+            m_Sources[sourceID].Stop();
         }
 
-        void PlayEffect(AudioClip audioClip)
+        void PlayEffect(AudioClip audioClip, AudioSource sources)
         {
             if (Time.time - m_LastSoundPlayTime >= m_MinSoundInterval)
             {
-                m_EffectSource.PlayOneShot(audioClip);
+                sources.PlayOneShot(audioClip);
                 m_LastSoundPlayTime = Time.time;
             }
         }
@@ -185,12 +206,12 @@ namespace PoisonArch
         /// Play a sound effect based on its sound ID
         /// </summary>
         /// <param name="soundID">The ID of the sound effect</param>
-        public void PlayEffect(SoundID soundID)
+        public void PlayEffect(SoundID soundID, EffectSourceID sourceID)
         {
             if (soundID == SoundID.None)
                 return;
 
-            PlayEffect(m_Clips[soundID]);
+            PlayEffect(m_Clips[soundID], e_Sources[sourceID]);
         }
     }
     public class AudioSettings
