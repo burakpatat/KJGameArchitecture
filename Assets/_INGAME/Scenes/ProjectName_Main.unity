@@ -1333,11 +1333,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5602543358469873415, guid: 0ab52e212f694a746bcbc8959c44c8e5, type: 3}
   m_PrefabInstance: {fileID: 596909678}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &599421925 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1803456615916073071, guid: 93d7c3ec43ed5924cb782d7be335892b, type: 3}
-  m_PrefabInstance: {fileID: 1803456615324255114}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &606638150
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,7 +1582,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &681532125
 Transform:
   m_ObjectHideFlags: 0
@@ -3637,7 +3632,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1528901518
 Transform:
   m_ObjectHideFlags: 0
@@ -4393,42 +4388,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1796921441}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1800604275
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1800604276}
-  m_Layer: 5
-  m_Name: FlyStarStartPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1800604276
+--- !u!224 &1800604276 stripped
 RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1800604276, guid: 93d7c3ec43ed5924cb782d7be335892b, type: 3}
+  m_PrefabInstance: {fileID: 1803456615324255114}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1800604275}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 599421925}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -445}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1823255638
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ namespace PoisonArch
         CoinSound,
         KeySound,
         ButtonSound,
-        MenuMusic
+        MenuMusic,
     }
     public enum MusicSourceID
     {
