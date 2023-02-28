@@ -20,6 +20,12 @@ public class RewardManager : AbstractSingleton<AudioManager>
     private StarCount_e StarCountEnum;
     public TMP_Text StarText;
 
+    [Header("FlyStar")]
+    public Transform FlyStarStartPos;
+    public GameObject ItemStar;
+    public Transform StarBarPos;
+    public TMP_Text StarBarText;
+
     [Header("Coin & Gem")]
     public TMP_Text StarCountText;
     public TMP_Text GemCountText;
@@ -33,11 +39,17 @@ public class RewardManager : AbstractSingleton<AudioManager>
     }
     private void Awake()
     {
-        StarCountText.text = LoadStarData().ToString();
+        //StarCountText.text = LoadStarData().ToString();
     }
     void Update()
     {
-        GetStar(StarCount_e.TwoStar);
+       GetStar(StarCount_e.TwoStar);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GetFlyStar(10);
+        }
+
     }
     public void GetStar(Enum _enum)
     {
@@ -80,6 +92,31 @@ public class RewardManager : AbstractSingleton<AudioManager>
                 DCSeq.Append(Stars[2].GetComponent<RectTransform>().DOScale(Vector3.one, .2f));
                 DCSeq.Append(StarText.GetComponent<RectTransform>().DOScale(Vector3.one, .5f));
                 break;
+        }
+
+        SaveStarData(S_StarCount);
+    }
+    public void GetFlyStar(int goStar)
+    {
+        Sequence DCSeq = DOTween.Sequence().SetAutoKill(false);
+
+        for (int i = 0; i < goStar; i++)
+        {
+            S_StarCount += i;
+            StarCountText.text = S_StarCount.ToString();
+
+            var flyStarIns = Instantiate(ItemStar, new Vector3(UnityEngine.Random.Range(FlyStarStartPos.position.x - 20f, FlyStarStartPos.position.x + 20f),
+                UnityEngine.Random.Range(FlyStarStartPos.position.y - 25f, FlyStarStartPos.position.y + 25f), 0f), Quaternion.identity) as GameObject;
+            flyStarIns.transform.SetParent(FlyStarStartPos);
+            flyStarIns.transform.localScale = Vector3.one;
+
+            DCSeq.Append(flyStarIns.transform.DOMove(StarBarPos.GetChild(2).position, .6f));
+            DCSeq.Append(StarBarPos.GetChild(2).GetComponent<RectTransform>().DOScale(new Vector3(1.2f, 1.2f, 1.2f), .2f));
+            DCSeq.Append(StarBarPos.GetChild(2).GetComponent<RectTransform>().DOScale(Vector3.one, .2f)).AppendCallback(() => {
+                //print("fly: " + S_StarCount);
+                //StarBarText.text = S_StarCount.ToString();
+                Destroy(flyStarIns);
+            });
         }
 
         SaveStarData(S_StarCount);
